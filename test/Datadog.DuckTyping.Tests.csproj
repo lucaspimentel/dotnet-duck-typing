@@ -1,18 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net6.0;netcoreapp3.1;netstandard2.0;net461</TargetFrameworks>
+    <TargetFrameworks>net6.0;netcoreapp3.1;net462</TargetFrameworks>
     <LangVersion>latest</LangVersion>
+    <RootNamespace>Datadog.Trace.DuckTyping.Tests</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="6.11.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
     <PackageReference Include="Serilog" Version="2.10.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
+    <PackageReference Include="xunit" Version="2.4.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Datadog.DockTyping.csproj" />
+    <ProjectReference Include="..\src\Datadog.DuckTyping.csproj" />
   </ItemGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netcoreapp3.1'">
@@ -27,6 +32,10 @@
   <ItemGroup>
     <None Remove="xunit.runner.json" />
     <Content Include="xunit.runner.json" CopyToOutputDirectory="Always" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="TestHelpers\" />
   </ItemGroup>
 
 </Project>

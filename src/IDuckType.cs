@@ -3,6 +3,8 @@
 // This product includes software developed at Datadog (https://www.datadoghq.com/). Copyright 2017 Datadog, Inc.
 // </copyright>
 
+#nullable enable
+
 using System;
 using System.ComponentModel;
 
@@ -18,11 +20,17 @@ namespace Datadog.Trace.DuckTyping
         /// <summary>
         /// Gets instance
         /// </summary>
-        object Instance { get; }
+        object? Instance { get; }
 
         /// <summary>
         /// Gets instance Type
         /// </summary>
         Type Type { get; }
+
+        /// <summary>
+        /// Calls ToString() on the instance
+        /// </summary>
+        /// <returns>ToString result</returns>
+        string ToString();
     }
 }

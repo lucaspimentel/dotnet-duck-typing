@@ -19,7 +19,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Xunit;
 
-namespace Datadog.Trace.Tests
+namespace Datadog.Trace.DuckTyping.Tests
 {
     public class DuckILoggerTests
     {

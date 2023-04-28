@@ -5,6 +5,7 @@
 
 using System;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 using FluentAssertions;
@@ -18,44 +19,6 @@ namespace Datadog.Trace.DuckTyping.Tests
 {
     public class ReverseProxyTests
     {
-        [Fact]
-        public void PrivateInterfaceReverseProxyTest()
-        {
-            Type iLogEventEnricherType = typeof(Datadog.Trace.Vendors.Serilog.Core.ILogEventEnricher);
-
-            var resetEvent = new ManualResetEventSlim();
-
-            var instance = new InternalLogEventEnricherImpl(resetEvent);
-
-            var proxy = instance.DuckImplement(iLogEventEnricherType);
-
-            var log = new Vendors.Serilog.LoggerConfiguration()
-                .Enrich.With((Vendors.Serilog.Core.ILogEventEnricher)proxy)
-                .MinimumLevel.Debug()
-                .WriteTo.Sink(new Vendors.Serilog.Sinks.File.NullSink())
-                .CreateLogger();
-
-            log.Information("Hello world");
-
-            Assert.True(resetEvent.Wait(5_000));
-        }
-
-        [Fact]
-        public void PrivateAbstractClassReverseProxyTest()
-        {
-            var resetEvent = new ManualResetEventSlim();
-
-            var eventInstance = new LogEventPropertyValueImpl(resetEvent);
-
-            var type = typeof(Datadog.Trace.Vendors.Serilog.Events.LogEventPropertyValue);
-            var proxy2 = eventInstance.DuckImplement(type);
-            eventInstance.SetBaseInstance(proxy2);
-
-            ((Datadog.Trace.Vendors.Serilog.Events.LogEventPropertyValue)proxy2).ToString("Hello world", null);
-
-            Assert.True(resetEvent.Wait(5_000));
-        }
-
         [Fact]
         public void PublicInterfaceReverseProxyTest()
         {
@@ -92,27 +55,6 @@ namespace Datadog.Trace.DuckTyping.Tests
             ((Serilog.Events.LogEventPropertyValue)proxy2).ToString("Hello world", null);
 
             Assert.True(resetEvent.Wait(5_000));
-        }
-
-        [Fact]
-        public void InternalClassWithVirtualMembersReverseProxyTest()
-        {
-            var expected = "Some random string";
-
-            var formatterInstance = new JsonValueFormatterImpl(expected);
-
-            var type = typeof(Datadog.Trace.Vendors.Serilog.Formatting.Json.JsonValueFormatter);
-
-            var proxy2 = formatterInstance.DuckImplement(type);
-
-            var value = new Vendors.Serilog.Events.ScalarValue("original");
-
-            var sb = new StringBuilder();
-            var sw = new StringWriter(sb);
-            ((Datadog.Trace.Vendors.Serilog.Formatting.Json.JsonValueFormatter)proxy2).Format(value, sw);
-
-            var actual = sb.ToString();
-            Assert.Equal(expected, actual);
         }
 
         [Fact]
@@ -153,6 +95,44 @@ namespace Datadog.Trace.DuckTyping.Tests
             var proxy = (IReverseProxyWithPropertiesTest)instance.DuckImplement(typeof(IReverseProxyWithPropertiesTest));
 
             proxy.Value.Should().Be(instance.Value);
+        }
+
+        [Fact]
+        public void ReverseProxyWithAttributeTest()
+        {
+            var instance = new ReverseProxyWithAttributeTestClass();
+            var proxy = (IReverseProxyWithPropertiesTest)instance.DuckImplement(typeof(IReverseProxyWithPropertiesTest));
+
+            proxy.GetType().GetCustomAttributes(inherit: false)
+                 .Should()
+                 .ContainSingle(x => x is MyCustomAttribute)
+                 .Which.Should().BeOfType<MyCustomAttribute>();
+        }
+
+        [Fact]
+        public void ReverseProxyWithAttributeAndArgumentsTest()
+        {
+            var instance = new ReverseProxyWithAttributeAndArgumentsTestClass();
+            var proxy = (IReverseProxyWithPropertiesTest)instance.DuckImplement(typeof(IReverseProxyWithPropertiesTest));
+
+            proxy.GetType().GetCustomAttributes(inherit: false)
+                 .Should()
+                 .ContainSingle(x => x is MyCustomAttribute)
+                 .Which.Should().BeOfType<MyCustomAttribute>()
+                 .Which.Alias.Should().Be("datadog");
+        }
+
+        [Fact]
+        public void ReverseProxyWithAttributeAndNamedArgumentsTest()
+        {
+            var instance = new ReverseProxyWithAttributeAndNamedArgumentsTestClass();
+            var createProxy = () => instance.DuckImplement(typeof(IReverseProxyWithPropertiesTest));
+
+            createProxy.Should()
+                       .Throw<TargetInvocationException>()
+                       .And
+                       .InnerException.Should()
+                       .BeOfType<DuckTypeCustomAttributeHasNamedArgumentsException>();
         }
 
         [Fact]
@@ -317,6 +297,27 @@ namespace Datadog.Trace.DuckTyping.Tests
             public string Value { get; set; } = "Datadog";
         }
 
+        [MyCustom]
+        public class ReverseProxyWithAttributeTestClass
+        {
+            [DuckReverseMethod]
+            public string Value { get; set; } = "Datadog";
+        }
+
+        [MyCustom("datadog")]
+        public class ReverseProxyWithAttributeAndArgumentsTestClass
+        {
+            [DuckReverseMethod]
+            public string Value { get; set; } = "Datadog";
+        }
+
+        [MyCustom(Alias = "datadog")]
+        public class ReverseProxyWithAttributeAndNamedArgumentsTestClass
+        {
+            [DuckReverseMethod]
+            public string Value { get; set; } = "Datadog";
+        }
+
         /* Types for ReverseProxyWithDuckChainingPropertiesTestClass */
 
         public interface IReverseProxyWithDuckChainingPropertiesTest
@@ -420,5 +421,19 @@ namespace Datadog.Trace.DuckTyping.Tests
         }
 
         // ************************************************************************************
+
+        public class MyCustomAttribute : Attribute
+        {
+            public MyCustomAttribute()
+            {
+            }
+
+            public MyCustomAttribute(string alias)
+            {
+                Alias = alias;
+            }
+
+            public string Alias { get; set; }
+        }
     }
 }

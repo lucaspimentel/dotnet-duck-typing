@@ -14,6 +14,7 @@ using Xunit;
 
 namespace Datadog.Trace.DuckTyping.Tests
 {
+    [Collection(nameof(GetAssemblyTestsCollection))]
     public class ExceptionsTests
     {
         [Fact]
@@ -42,7 +43,7 @@ namespace Datadog.Trace.DuckTyping.Tests
             public string OnlySetter;
         }
 
-        internal class PropertyCantBeReadExceptionClass
+        public class PropertyCantBeReadExceptionClass
         {
             public string OnlySetter
             {
@@ -68,7 +69,7 @@ namespace Datadog.Trace.DuckTyping.Tests
             string OnlyGetter { get; set; }
         }
 
-        internal class PropertyCantBeWrittenExceptionClass
+        public class PropertyCantBeWrittenExceptionClass
         {
             public string OnlyGetter { get; }
         }
@@ -112,7 +113,7 @@ namespace Datadog.Trace.DuckTyping.Tests
             string Item { set; }
         }
 
-        internal class PropertyArgumentsLengthExceptionClass
+        public class PropertyArgumentsLengthExceptionClass
         {
             public string this[string key]
             {
@@ -140,7 +141,7 @@ namespace Datadog.Trace.DuckTyping.Tests
             string Name { get; set; }
         }
 
-        internal class FieldIsReadonlyExceptionClass
+        public class FieldIsReadonlyExceptionClass
         {
             private readonly string _name = string.Empty;
 
@@ -176,12 +177,12 @@ namespace Datadog.Trace.DuckTyping.Tests
             string GetName();
         }
 
-        internal class ProxyAndTargetMethodReturnTypeMismatchExceptionNonVoidClass
+        public class ProxyAndTargetMethodReturnTypeMismatchExceptionNonVoidClass
         {
             public string GetName() => default;
         }
 
-        internal class ProxyAndTargetMethodReturnTypeMismatchExceptionVoidClass
+        public class ProxyAndTargetMethodReturnTypeMismatchExceptionVoidClass
         {
             public void GetName()
             {
@@ -217,13 +218,13 @@ namespace Datadog.Trace.DuckTyping.Tests
             string GetName();
         }
 
-        internal class ReverseProxyAndTargetMethodReturnTypeMismatchExceptionNonVoidClass
+        public class ReverseProxyAndTargetMethodReturnTypeMismatchExceptionNonVoidClass
         {
             [DuckReverseMethod]
             public string GetName() => default;
         }
 
-        internal class ReverseProxyAndTargetMethodReturnTypeMismatchExceptionVoidClass
+        public class ReverseProxyAndTargetMethodReturnTypeMismatchExceptionVoidClass
         {
             [DuckReverseMethod]
             public void GetName()
@@ -250,7 +251,7 @@ namespace Datadog.Trace.DuckTyping.Tests
             string Name { get; set; }
         }
 
-        internal class IncorrectReversePropertyUsageExceptionClass
+        public class IncorrectReversePropertyUsageExceptionClass
         {
             public string Name { get; set; }
         }
@@ -274,7 +275,7 @@ namespace Datadog.Trace.DuckTyping.Tests
             string GetName();
         }
 
-        internal class IncorrectReverseMethodUsageExceptionClass
+        public class IncorrectReverseMethodUsageExceptionClass
         {
             public string GetName() => default;
         }
@@ -297,7 +298,7 @@ namespace Datadog.Trace.DuckTyping.Tests
             public string Name { get; set; }
         }
 
-        internal class ReverseProxyBaseIsStructExceptionClass
+        public class ReverseProxyBaseIsStructExceptionClass
         {
             [DuckReverseMethod]
             public string Name { get; set; }
@@ -397,7 +398,7 @@ namespace Datadog.Trace.DuckTyping.Tests
             public string Name;
         }
 
-        internal class PropertyOrFieldNotFoundExceptionClass
+        public class PropertyOrFieldNotFoundExceptionClass
         {
         }
 
@@ -493,7 +494,7 @@ namespace Datadog.Trace.DuckTyping.Tests
             public void AddGeneric(object value);
         }
 
-        internal class TargetMethodNotFoundExceptionClass
+        public class TargetMethodNotFoundExceptionClass
         {
             public void Add(string key, string value)
             {
@@ -523,7 +524,7 @@ namespace Datadog.Trace.DuckTyping.Tests
             public void Add(string key);
         }
 
-        internal class ProxyMethodParameterIsMissingExceptionClass
+        public class ProxyMethodParameterIsMissingExceptionClass
         {
             public void Add(string key, string value)
             {
@@ -560,7 +561,7 @@ namespace Datadog.Trace.DuckTyping.Tests
             public void Add(string key, out string value);
         }
 
-        internal class ProxyAndTargetMethodParameterSignatureMismatchExceptionClass
+        public class ProxyAndTargetMethodParameterSignatureMismatchExceptionClass
         {
             public void Add(string key, string value)
             {
@@ -652,7 +653,7 @@ namespace Datadog.Trace.DuckTyping.Tests
             public void Add(string key, string value);
         }
 
-        internal class TargetMethodAmbiguousMatchExceptionClass
+        public class TargetMethodAmbiguousMatchExceptionClass
         {
             public void Add(string key, Task value)
             {
@@ -708,7 +709,7 @@ namespace Datadog.Trace.DuckTyping.Tests
 
             cast.Should()
                 .Throw<TargetInvocationException>()
-                .WithInnerExceptionExactly<DuckTypeException>();
+                .WithInnerExceptionExactly<DuckTypeReverseProxyMissingPropertyImplementationException>();
         }
 
         public interface IReverseProxyMissingPropertyImplementationException

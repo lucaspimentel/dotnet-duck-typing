@@ -23,7 +23,7 @@ namespace Datadog.Trace.DuckTyping.Tests.Methods.ProxiesDefinitions
 
         object InternalSum(int a, int b);
 
-        [Duck(ParameterTypeNames = new string[] { "System.String", "Datadog.Trace.DuckTyping.Tests.ObscureObject+DummyFieldObject, Datadog.Trace.DuckTyping.Tests" })]
+        [Duck(ParameterTypeNames = new string[] { "System.String", "Datadog.DuckTyping.Tests.ObscureObject+DummyFieldObject, Datadog.DuckTyping.Tests" })]
         void Add(string name, object obj);
 
         void Add(string name, int obj);

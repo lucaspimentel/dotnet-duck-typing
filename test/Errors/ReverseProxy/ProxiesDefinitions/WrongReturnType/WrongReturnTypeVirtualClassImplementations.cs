@@ -7,14 +7,14 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.ProxiesDefinitions.
 {
     public class WrongReturnTypeVirtualClassImplementations
     {
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethod")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethod")]
         public class VirtualMethod
         {
             [DuckReverseMethod]
             public string TryGetValue(string value) => value;
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithOutParam")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithOutParam")]
         public class VirtualMethodWithOutParam
         {
             [DuckReverseMethod]
@@ -24,7 +24,7 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.ProxiesDefinitions.
             }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithRefParam")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithRefParam")]
         public class VirtualMethodWithRefParam
         {
             [DuckReverseMethod]
@@ -35,35 +35,35 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.ProxiesDefinitions.
             }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualGenericMethod")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualGenericMethod")]
         public class VirtualGenericMethod
         {
             [DuckReverseMethod]
             public int Echo<T>(T value) => 100;
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualGetOnlyProperty")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualGetOnlyProperty")]
         public class VirtualGetOnlyProperty
         {
             [DuckReverseMethod]
             public int Value { get; }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualProperty")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualProperty")]
         public class VirtualProperty
         {
             [DuckReverseMethod]
             public int Value { get; set; }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithVirtualMethod")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithVirtualMethod")]
         public class VirtualMethodWithVirtualMethod
         {
             [DuckReverseMethod]
             public string TryGetValue(string value) => value;
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithOutParamWithVirtualMethod")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithOutParamWithVirtualMethod")]
         public class VirtualMethodWithOutParamWithVirtualMethod
         {
             [DuckReverseMethod]
@@ -74,7 +74,7 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.ProxiesDefinitions.
             }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithRefParamWithVirtualMethod")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithRefParamWithVirtualMethod")]
         public class VirtualMethodWithRefParamWithVirtualMethod
         {
             [DuckReverseMethod]
@@ -84,35 +84,35 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.ProxiesDefinitions.
             }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualGenericMethodWithVirtualMethod")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualGenericMethodWithVirtualMethod")]
         public class VirtualGenericMethodWithVirtualMethod
         {
             [DuckReverseMethod]
             public int Echo<T>(T value) => 100;
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualGetOnlyPropertyWithVirtualMethod")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualGetOnlyPropertyWithVirtualMethod")]
         public class VirtualGetOnlyPropertyWithVirtualMethod
         {
             [DuckReverseMethod]
             public int Value { get; }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualPropertyWithVirtualMethod")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualPropertyWithVirtualMethod")]
         public class VirtualPropertyWithVirtualMethod
         {
             [DuckReverseMethod]
             public int Value { get; set; }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithVirtualProperty")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithVirtualProperty")]
         public class VirtualMethodWithVirtualProperty
         {
             [DuckReverseMethod]
             public string TryGetValue(string value) => value;
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithOutParamWithVirtualProperty")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithOutParamWithVirtualProperty")]
         public class VirtualMethodWithOutParamWithVirtualProperty
         {
             [DuckReverseMethod]
@@ -122,7 +122,7 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.ProxiesDefinitions.
             }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithRefParamWithVirtualProperty")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualMethodWithRefParamWithVirtualProperty")]
         public class VirtualMethodWithRefParamWithVirtualProperty
         {
             [DuckReverseMethod]
@@ -133,21 +133,21 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.ProxiesDefinitions.
             }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualGenericMethodWithVirtualProperty")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualGenericMethodWithVirtualProperty")]
         public class VirtualGenericMethodWithVirtualProperty
         {
             [DuckReverseMethod]
             public int Echo<T>(T value) => 100;
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualGetOnlyPropertyWithVirtualProperty")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualGetOnlyPropertyWithVirtualProperty")]
         public class VirtualGetOnlyPropertyWithVirtualProperty
         {
             [DuckReverseMethod]
             public int Value { get; }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualPropertyWithVirtualProperty")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.VirtualClasses+VirtualPropertyWithVirtualProperty")]
         public class VirtualPropertyWithVirtualProperty
         {
             [DuckReverseMethod]

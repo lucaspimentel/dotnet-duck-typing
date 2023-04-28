@@ -94,7 +94,7 @@ namespace Datadog.Trace.DuckTyping.Tests
 
         public interface IProxyDefinition
         {
-            [Duck(ExplicitInterfaceTypeName = "Datadog.Trace.DuckTyping.Tests.DuckExplicitInterfacePrivateTests+ITarget")]
+            [Duck(ExplicitInterfaceTypeName = "Datadog.DuckTyping.Tests.DuckExplicitInterfacePrivateTests+ITarget")]
             string SayHi();
 
             [Duck(ExplicitInterfaceTypeName = "*")]

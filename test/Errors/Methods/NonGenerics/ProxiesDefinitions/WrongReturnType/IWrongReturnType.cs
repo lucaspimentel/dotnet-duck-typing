@@ -41,7 +41,7 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.Methods.NonGenerics.ProxiesDefin
 
         public interface IAdd1
         {
-            [Duck(ParameterTypeNames = new string[] { "System.String", "Datadog.Trace.DuckTyping.Tests.ObscureObject+DummyFieldObject, Datadog.Trace.DuckTyping.Tests" })]
+            [Duck(ParameterTypeNames = new string[] { "System.String", "Datadog.DuckTyping.Tests.ObscureObject+DummyFieldObject, Datadog.DuckTyping.Tests" })]
             string Add(string name, object obj);
         }
 

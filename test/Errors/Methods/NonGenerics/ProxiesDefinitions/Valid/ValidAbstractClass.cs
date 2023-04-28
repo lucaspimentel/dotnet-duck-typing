@@ -63,7 +63,7 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.Methods.NonGenerics.ProxiesDefin
 
         public abstract class Add1AbstractClass
         {
-            [Duck(ParameterTypeNames = new string[] { "System.String", "Datadog.Trace.DuckTyping.Tests.ObscureObject+DummyFieldObject, Datadog.Trace.DuckTyping.Tests" })]
+            [Duck(ParameterTypeNames = new string[] { "System.String", "Datadog.DuckTyping.Tests.ObscureObject+DummyFieldObject, Datadog.DuckTyping.Tests" })]
             public abstract void Add(string name, object obj);
 
             public void NormalMethod()

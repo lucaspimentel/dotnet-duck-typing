@@ -36,7 +36,7 @@ namespace Datadog.Trace.DuckTyping.Tests
             }
         }
 
-        internal class T_HostingApplicationDiagnostics
+        public class T_HostingApplicationDiagnostics
         {
             private readonly T_ILogger _logger;
 
@@ -78,7 +78,7 @@ namespace Datadog.Trace.DuckTyping.Tests
             }
         }
 
-        internal class T_InternalObject
+        public class T_InternalObject
         {
         }
 

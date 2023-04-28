@@ -12,7 +12,7 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy
         private readonly string _typeName;
         private readonly string _assembly;
 
-        public ReverseTypeToTestAttribute(string typeName, string assembly = "Datadog.Trace.DuckTyping.Tests")
+        public ReverseTypeToTestAttribute(string typeName, string assembly = "Datadog.DuckTyping.Tests")
         {
             _typeName = typeName;
             _assembly = assembly;

@@ -8,15 +8,15 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.ProxiesDefinitions.
     // These types implicitly implement various classes
     public class WrongReturnTypeAbstractClassImplementations
     {
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethod")]
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethod")]
         public class AbstractMethod
         {
             [DuckReverseMethod]
             public string TryGetValue(string value) => value;
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithOutParam")]
-        internal class AbstractMethodWithOutParam
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithOutParam")]
+        public class AbstractMethodWithOutParam
         {
             [DuckReverseMethod]
             public void TryGetValue(out string value)
@@ -25,8 +25,8 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.ProxiesDefinitions.
             }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithRefParam")]
-        internal class AbstractMethodWithRefParam
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithRefParam")]
+        public class AbstractMethodWithRefParam
         {
             [DuckReverseMethod]
             public string TryGetValue(ref string value)
@@ -36,36 +36,36 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.ProxiesDefinitions.
             }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractGenericMethod")]
-        internal class AbstractGenericMethod
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractGenericMethod")]
+        public class AbstractGenericMethod
         {
             [DuckReverseMethod]
             public int Echo<T>(T value) => 100;
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractGetOnlyProperty")]
-        internal class AbstractGetOnlyProperty
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractGetOnlyProperty")]
+        public class AbstractGetOnlyProperty
         {
             [DuckReverseMethod]
             public int Value { get; }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractProperty")]
-        internal class AbstractProperty
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractProperty")]
+        public class AbstractProperty
         {
             [DuckReverseMethod]
             public int Value { get; set; }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithVirtualMethod")]
-        internal class AbstractMethodWithVirtualMethod
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithVirtualMethod")]
+        public class AbstractMethodWithVirtualMethod
         {
             [DuckReverseMethod]
             public string TryGetValue(string value) => value;
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithOutParamWithVirtualMethod")]
-        internal class AbstractMethodWithOutParamWithVirtualMethod
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithOutParamWithVirtualMethod")]
+        public class AbstractMethodWithOutParamWithVirtualMethod
         {
             [DuckReverseMethod]
             public void TryGetValue(out string value)
@@ -74,8 +74,8 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.ProxiesDefinitions.
             }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithRefParamWithVirtualMethod")]
-        internal class AbstractMethodWithRefParamWithVirtualMethod
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithRefParamWithVirtualMethod")]
+        public class AbstractMethodWithRefParamWithVirtualMethod
         {
             [DuckReverseMethod]
             public string TryGetValue(ref string value)
@@ -85,36 +85,36 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.ProxiesDefinitions.
             }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractGenericMethodWithVirtualMethod")]
-        internal class AbstractGenericMethodWithVirtualMethod
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractGenericMethodWithVirtualMethod")]
+        public class AbstractGenericMethodWithVirtualMethod
         {
             [DuckReverseMethod]
             public int Echo<T>(T value) => 100;
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractGetOnlyPropertyWithVirtualMethod")]
-        internal class AbstractGetOnlyPropertyWithVirtualMethod
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractGetOnlyPropertyWithVirtualMethod")]
+        public class AbstractGetOnlyPropertyWithVirtualMethod
         {
             [DuckReverseMethod]
             public int Value { get; }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractPropertyWithVirtualMethod")]
-        internal class AbstractPropertyWithVirtualMethod
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractPropertyWithVirtualMethod")]
+        public class AbstractPropertyWithVirtualMethod
         {
             [DuckReverseMethod]
             public int Value { get; set; }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithVirtualProperty")]
-        internal class AbstractMethodWithVirtualProperty
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithVirtualProperty")]
+        public class AbstractMethodWithVirtualProperty
         {
             [DuckReverseMethod]
             public string TryGetValue(string value) => value;
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithOutParamWithVirtualProperty")]
-        internal class AbstractMethodWithOutParamWithVirtualProperty
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithOutParamWithVirtualProperty")]
+        public class AbstractMethodWithOutParamWithVirtualProperty
         {
             [DuckReverseMethod]
             public void TryGetValue(out string value)
@@ -123,8 +123,8 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.ProxiesDefinitions.
             }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithRefParamWithVirtualProperty")]
-        internal class AbstractMethodWithRefParamWithVirtualProperty
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractMethodWithRefParamWithVirtualProperty")]
+        public class AbstractMethodWithRefParamWithVirtualProperty
         {
             [DuckReverseMethod]
             public string TryGetValue(ref string value)
@@ -134,22 +134,22 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.ProxiesDefinitions.
             }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractGenericMethodWithVirtualProperty")]
-        internal class AbstractGenericMethodWithVirtualProperty
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractGenericMethodWithVirtualProperty")]
+        public class AbstractGenericMethodWithVirtualProperty
         {
             [DuckReverseMethod]
             public int Echo<T>(T value) => 100;
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractGetOnlyPropertyWithVirtualProperty")]
-        internal class AbstractGetOnlyPropertyWithVirtualProperty
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractGetOnlyPropertyWithVirtualProperty")]
+        public class AbstractGetOnlyPropertyWithVirtualProperty
         {
             [DuckReverseMethod]
             public int Value { get; }
         }
 
-        [ReverseTypeToTest("Datadog.Trace.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractPropertyWithVirtualProperty")]
-        internal class AbstractPropertyWithVirtualProperty
+        [ReverseTypeToTest("Datadog.DuckTyping.Tests.Errors.ReverseProxy.OriginalTypeDefinitions.AbstractClasses+AbstractPropertyWithVirtualProperty")]
+        public class AbstractPropertyWithVirtualProperty
         {
             [DuckReverseMethod]
             public int Value { get; set; }

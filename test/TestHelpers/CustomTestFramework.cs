@@ -4,6 +4,7 @@
 // </copyright>
 
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -13,13 +14,13 @@ using Xunit;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-[assembly: TestFramework("Datadog.Trace.DuckTyping.Tests.CustomTestFramework", "Datadog.Trace.DuckTyping.Tests")]
+[assembly: TestFramework("Datadog.Trace.TestHelpers.CustomTestFramework", "Datadog.DuckTyping.Tests")]
 
-namespace Datadog.Trace.DuckTyping.Tests
+namespace Datadog.Trace.TestHelpers
 {
-    public class CustomTestFramework : XunitTestFramework
+    public abstract class CustomTestFramework : XunitTestFramework
     {
-        public CustomTestFramework(IMessageSink messageSink)
+        protected CustomTestFramework(IMessageSink messageSink)
             : base(messageSink)
         {
         }
@@ -52,9 +53,54 @@ namespace Datadog.Trace.DuckTyping.Tests
             {
             }
 
+            protected override async Task<RunSummary> RunTestCollectionsAsync(IMessageBus messageBus, CancellationTokenSource cancellationTokenSource)
+            {
+                var collections = OrderTestCollections().Select(
+                    pair =>
+                    new
+                    {
+                        Collection = pair.Item1,
+                        TestCases = pair.Item2,
+                        DisableParallelization = IsParallelizationDisabled(pair.Item1)
+                    })
+                    .ToList();
+
+                var summary = new RunSummary();
+
+                using var runner = new ConcurrentRunner();
+
+                var tasks = new List<Task<RunSummary>>();
+
+                foreach (var test in collections.Where(t => !t.DisableParallelization))
+                {
+                    tasks.Add(runner.RunAsync(async () => await RunTestCollectionAsync(messageBus, test.Collection, test.TestCases, cancellationTokenSource)));
+                }
+
+                await Task.WhenAll(tasks);
+
+                foreach (var task in tasks)
+                {
+                    summary.Aggregate(task.Result);
+                }
+
+                // Single threaded collections
+                foreach (var test in collections.Where(t => t.DisableParallelization))
+                {
+                    summary.Aggregate(await RunTestCollectionAsync(messageBus, test.Collection, test.TestCases, cancellationTokenSource));
+                }
+
+                return summary;
+            }
+
             protected override Task<RunSummary> RunTestCollectionAsync(IMessageBus messageBus, ITestCollection testCollection, IEnumerable<IXunitTestCase> testCases, CancellationTokenSource cancellationTokenSource)
             {
                 return new CustomTestCollectionRunner(testCollection, testCases, DiagnosticMessageSink, messageBus, TestCaseOrderer, new ExceptionAggregator(Aggregator), cancellationTokenSource).RunAsync();
+            }
+
+            private static bool IsParallelizationDisabled(ITestCollection collection)
+            {
+                var attr = collection.CollectionDefinition?.GetCustomAttributes(typeof(CollectionDefinitionAttribute)).SingleOrDefault();
+                return attr?.GetNamedArgument<bool>(nameof(CollectionDefinitionAttribute.DisableParallelization)) is true;
             }
         }
 
@@ -112,11 +158,17 @@ namespace Datadog.Trace.DuckTyping.Tests
 
                 _diagnosticMessageSink.OnMessage(new DiagnosticMessage($"STARTED: {test}"));
 
+                using var timer = new Timer(
+                    _ => _diagnosticMessageSink.OnMessage(new DiagnosticMessage($"WARNING: {test} has been running for more than 15 minutes")),
+                    null,
+                    TimeSpan.FromMinutes(15),
+                    Timeout.InfiniteTimeSpan);
+
                 try
                 {
                     var result = await base.RunTestCaseAsync(testCase);
 
-                    var status = result.Failed > 0 ? "FAILURE" : "SUCCESS";
+                    var status = result.Failed > 0 ? "FAILURE" : (result.Skipped > 0 ? "SKIPPED" : "SUCCESS");
 
                     _diagnosticMessageSink.OnMessage(new DiagnosticMessage($"{status}: {test} ({result.Time}s)"));
 
@@ -126,6 +178,54 @@ namespace Datadog.Trace.DuckTyping.Tests
                 {
                     _diagnosticMessageSink.OnMessage(new DiagnosticMessage($"ERROR: {test} ({ex.Message})"));
                     throw;
+                }
+            }
+        }
+
+        private class ConcurrentRunner : IDisposable
+        {
+            private readonly BlockingCollection<Func<Task>> _queue;
+
+            public ConcurrentRunner()
+            {
+                _queue = new();
+
+                for (int i = 0; i < Environment.ProcessorCount; i++)
+                {
+                    var thread = new Thread(DoWork) { IsBackground = true };
+                    thread.Start();
+                }
+            }
+
+            public void Dispose()
+            {
+                _queue.CompleteAdding();
+            }
+
+            public Task<T> RunAsync<T>(Func<Task<T>> action)
+            {
+                var tcs = new TaskCompletionSource<T>(TaskCreationOptions.RunContinuationsAsynchronously);
+
+                _queue.Add(async () =>
+                {
+                    try
+                    {
+                        tcs.TrySetResult(await action());
+                    }
+                    catch (Exception ex)
+                    {
+                        tcs.TrySetException(ex);
+                    }
+                });
+
+                return tcs.Task;
+            }
+
+            private void DoWork()
+            {
+                foreach (var item in _queue.GetConsumingEnumerable())
+                {
+                    item().GetAwaiter().GetResult();
                 }
             }
         }

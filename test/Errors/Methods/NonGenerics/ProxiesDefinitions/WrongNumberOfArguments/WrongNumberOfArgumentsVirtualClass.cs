@@ -67,7 +67,7 @@ namespace Datadog.Trace.DuckTyping.Tests.Errors.Methods.NonGenerics.ProxiesDefin
             {
             }
 
-            [Duck(ParameterTypeNames = new string[] { "System.String", "Datadog.Trace.DuckTyping.Tests.ObscureObject+DummyFieldObject, Datadog.Trace.DuckTyping.Tests", "System.String" })]
+            [Duck(ParameterTypeNames = new string[] { "System.String", "Datadog.DuckTyping.Tests.ObscureObject+DummyFieldObject, Datadog.DuckTyping.Tests", "System.String" })]
             public virtual void Add(string name, object obj, string wrong)
             {
             }
