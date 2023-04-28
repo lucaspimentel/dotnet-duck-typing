@@ -8,6 +8,7 @@
   <ItemGroup>
     <PackageReference Include="Serilog" Version="2.10.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
+    <PackageReference Include="System.Collections.Immutable" Version="5.0.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -18,8 +19,14 @@
     <DefineConstants>$(DefineConstants);INTERFACE_DEFAULTS</DefineConstants>
   </PropertyGroup>
 
+  <!-- For testing edge case duck typing scenarios (ILogger)-->
+  <ItemGroup Condition=" !$(TargetFramework.StartsWith('net4')) ">
+    <PackageReference Include="Microsoft.AspNetCore" Version="2.2.0" />
+  </ItemGroup>
+
   <ItemGroup>
-    <None Update="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Remove="xunit.runner.json" />
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="Always" />
   </ItemGroup>
 
 </Project>
