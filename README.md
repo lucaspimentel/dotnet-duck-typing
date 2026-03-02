@@ -7,3 +7,7 @@ Experimental stand-alone version of Datadog's duck-typing library.
 - Original implementation: https://github.com/tonyredondo/ObjectInspector
 
 All credit to @tonyredondo and the APM .NET team at Datadog.
+
+## License
+
+This project is licensed under the [Apache License 2.0](LICENSE).
